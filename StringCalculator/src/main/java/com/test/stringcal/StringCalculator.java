@@ -1,7 +1,7 @@
 package com.test.stringcal;
 
 public class StringCalculator {
-    private static final String DELIMITER = ",";
+    private static final String DELIMITER = ",|\n";
 
     public int add(String str) {
         return calculateSum(getNumbers(str));

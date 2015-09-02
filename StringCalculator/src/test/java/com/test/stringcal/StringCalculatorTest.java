@@ -39,4 +39,9 @@ public class StringCalculatorTest {
     public void testMultipleValuesWithCommasDelimiterString_6numbers() {
         assertEquals(21, stringCalculator.add("1,2,3,4,5,6"));
     }
+
+    @Test
+    public void testNewLineCharsWithCommasDelimiterString_3numbers() {
+        assertEquals(6, stringCalculator.add("1\n2,3"));
+    }
 }
