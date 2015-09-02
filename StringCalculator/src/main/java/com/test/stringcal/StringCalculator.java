@@ -1,17 +1,26 @@
 package com.test.stringcal;
 
 public class StringCalculator {
+    private static final String DELIMITER = ",";
 
     public int add(String str) {
+        return calculateSum(getNumbers(str));
+    }
 
+    private String[] getNumbers(String str) {
         if (str.isEmpty()) {
-            return 0;
-        } else if (str.contains(",")) {
-            String[] numberStrings = str.split(",");
-            return convertStringToInt(numberStrings[0]) + convertStringToInt(numberStrings[1]);
+            return new String[0];
         } else {
-            return convertStringToInt(str);
+            return str.split(DELIMITER);
         }
+    }
+
+    private int calculateSum(String[] numberStrings) {
+        int sum = 0;
+        for (String str : numberStrings) {
+            sum = sum + convertStringToInt(str);
+        }
+        return sum;
     }
 
     private int convertStringToInt(String str) {

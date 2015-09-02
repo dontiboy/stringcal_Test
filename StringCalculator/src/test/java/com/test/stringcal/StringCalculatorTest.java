@@ -29,4 +29,14 @@ public class StringCalculatorTest {
     public void testTwoValuesWithCommasDelimiterString() {
         assertEquals(3, stringCalculator.add("1,2"));
     }
+
+    @Test
+    public void testMultipleValuesWithCommasDelimiterString_3numbers() {
+        assertEquals(6, stringCalculator.add("1,2,3"));
+    }
+
+    @Test
+    public void testMultipleValuesWithCommasDelimiterString_6numbers() {
+        assertEquals(21, stringCalculator.add("1,2,3,4,5,6"));
+    }
 }
