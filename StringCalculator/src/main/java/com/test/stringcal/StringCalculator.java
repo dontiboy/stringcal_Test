@@ -1,10 +1,19 @@
 package com.test.stringcal;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringCalculator {
-    private static final String DELIMITER = ",|\n";
+    private String DELIMITER = ",|\n";
 
     public int add(String str) {
-        return calculateSum(getNumbers(str));
+        Matcher matcher = Pattern.compile("^//(.)\n(.*)").matcher(str);
+        String numberString = str;
+        if (matcher.find()) {
+            DELIMITER = matcher.group(1);
+            numberString = matcher.group(2);
+        }
+        return calculateSum(getNumbers(numberString));
     }
 
     private String[] getNumbers(String str) {

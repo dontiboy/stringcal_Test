@@ -44,4 +44,9 @@ public class StringCalculatorTest {
     public void testNewLineCharsWithCommasDelimiterString_3numbers() {
         assertEquals(6, stringCalculator.add("1\n2,3"));
     }
+
+    @Test
+    public void testToSupportDifferentDelimiterString_3numbers() {
+        assertEquals(3, stringCalculator.add("//@\n1@2"));
+    }
 }
