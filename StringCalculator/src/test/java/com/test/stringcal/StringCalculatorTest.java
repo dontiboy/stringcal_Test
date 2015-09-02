@@ -8,11 +8,11 @@ import static org.junit.Assert.assertEquals;
 
 public class StringCalculatorTest {
 
-    private StringCalculator stringCalculator=null;
+    private StringCalculator stringCalculator = null;
 
     @Before
     public void setUp() throws Exception {
-        stringCalculator= new StringCalculator();
+        stringCalculator = new StringCalculator();
     }
 
     @Test
@@ -26,7 +26,7 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void testMultpleValuesWithCommasDelimiterString() {
+    public void testTwoValuesWithCommasDelimiterString() {
         assertEquals(3, stringCalculator.add("1,2"));
     }
 }
