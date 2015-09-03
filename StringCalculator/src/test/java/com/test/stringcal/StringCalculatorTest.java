@@ -79,4 +79,11 @@ public class StringCalculatorTest {
         assertEquals(2, stringCalculator.add("2,1001"));
     }
 
+    @Test
+    public void testMultipleCharacterDelimitersShouldBeHandled() {
+        assertEquals(3, stringCalculator.add("//[|||]\n1|||2"));
+        assertEquals(6, stringCalculator.add("//[***]\n1***2***3"));
+    }
+
+
 }

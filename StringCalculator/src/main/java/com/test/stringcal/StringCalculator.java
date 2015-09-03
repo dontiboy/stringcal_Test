@@ -5,13 +5,15 @@ import java.util.regex.Pattern;
 
 public class StringCalculator {
 
-    public static final int REGEX_GROUP_NUMBER_STRING = 2;
-    public static final int REGEX_NUMBER_OF_USER_DEFINED_DELIMITERS = 1;
+    public static final int REGEX_GROUP_NUMBER_STRING = 5;
+    public static final int REGEX_NUMBER_OF_USER_DEFINED_SINGLE_CHARACTER_DELIMITERS = 2;
     public static final String PREDEFINED_REGEX = ",|\n";
-    public static final String _USER_DEFINED_REGEX_PATTERN = "^//(.)\n(.*)";
+    //public static final String _USER_DEFINED_REGEX_PATTERN = "^//(.)\n(.*)";
+    public static final String _USER_DEFINED_REGEX_PATTERN = "^//((.)|(\\[(.*)\\]))\n(.*)";
     public static final String NEGATIVE_NUMBERS_ARE_NOT_ALLOWED_MESSAGE = "Negative Numbers are not allowed :";
     public static final String SPACE = " ";
     public static final int THOUSAND_NUMBER = 1000;
+    public static final int REGEXP_GROUP_NUMBER_OF_USER_DEFINED_MULTIPLE_CHARACTER_DELIMITER = 4;
 
     public int add(String str) {
 
@@ -31,10 +33,30 @@ public class StringCalculator {
 
     private String getDelimiters(Matcher matcher) {
         if (matcher.find()) {
-            return Pattern.quote(matcher.group(REGEX_NUMBER_OF_USER_DEFINED_DELIMITERS));
+            return getUserDefinedDelimter(matcher);
         } else {
             return PREDEFINED_REGEX;
         }
+    }
+
+    private String getUserDefinedDelimter(Matcher matcher) {
+        if (hasUserDefinedSingleCharacterDelimiter(matcher)) {
+            return getUserDefinedSingleCharacterDelimiter(matcher);
+        }else{
+            return getUserDefinedMultipleDelimiters(matcher);
+        }
+    }
+
+    private String getUserDefinedMultipleDelimiters(Matcher matcher) {
+        return Pattern.quote(matcher.group(REGEXP_GROUP_NUMBER_OF_USER_DEFINED_MULTIPLE_CHARACTER_DELIMITER));
+    }
+
+    private String getUserDefinedSingleCharacterDelimiter(Matcher matcher) {
+        return Pattern.quote(matcher.group(REGEX_NUMBER_OF_USER_DEFINED_SINGLE_CHARACTER_DELIMITERS));
+    }
+
+    private boolean hasUserDefinedSingleCharacterDelimiter(Matcher matcher) {
+        return matcher.group(REGEX_NUMBER_OF_USER_DEFINED_SINGLE_CHARACTER_DELIMITERS) != null;
     }
 
     private String[] getNumbers(String str, String delimiter) {
