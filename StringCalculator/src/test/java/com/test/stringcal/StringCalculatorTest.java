@@ -67,11 +67,16 @@ public class StringCalculatorTest {
         stringCalculator.add("//,\n-2");
    }
 
-    @Test
-   public void testMultipleNegativeNumbersToThrowException() {
+  @Test
+  public void testMultipleNegativeNumbersToThrowException() {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage("Negative Numbers are not allowed : -1 -2 -3");
         stringCalculator.add("//,\n-1,-2,-3");
+  }
+
+    @Test
+    public void testNumbersBiggerThan1000toIgnore() {
+        assertEquals(2, stringCalculator.add("2,1001"));
     }
 
 }

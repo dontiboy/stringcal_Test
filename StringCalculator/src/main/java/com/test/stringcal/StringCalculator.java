@@ -11,6 +11,7 @@ public class StringCalculator {
     public static final String _USER_DEFINED_REGEX_PATTERN = "^//(.)\n(.*)";
     public static final String NEGATIVE_NUMBERS_ARE_NOT_ALLOWED_MESSAGE = "Negative Numbers are not allowed :";
     public static final String SPACE = " ";
+    public static final int THOUSAND_NUMBER = 1000;
 
     public int add(String str) {
 
@@ -64,6 +65,14 @@ public class StringCalculator {
         if (num < 0) {
             errorBuilder.append(SPACE).append(num);
         }
-        return num;
+        return ignoreNumsMorethan1000(num);
+    }
+
+    private int ignoreNumsMorethan1000(int num) {
+        if (num > THOUSAND_NUMBER) {
+            return 0;
+        } else {
+            return num;
+        }
     }
 }
