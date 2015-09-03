@@ -9,6 +9,8 @@ public class StringCalculator {
     public static final int REGEX_NUMBER_OF_USER_DEFINED_DELIMITERS = 1;
     public static final String PREDEFINED_REGEX = ",|\n";
     public static final String _USER_DEFINED_REGEX_PATTERN = "^//(.)\n(.*)";
+    public static final String NEGATIVE_NUMBERS_ARE_NOT_ALLOWED_MESSAGE = "Negative Numbers are not allowed :";
+    public static final String SPACE = " ";
 
     public int add(String str) {
 
@@ -28,8 +30,8 @@ public class StringCalculator {
 
     private String getDelimiters(Matcher matcher) {
         if (matcher.find()) {
-            return matcher.group(REGEX_NUMBER_OF_USER_DEFINED_DELIMITERS);
-        }else{
+            return Pattern.quote(matcher.group(REGEX_NUMBER_OF_USER_DEFINED_DELIMITERS));
+        } else {
             return PREDEFINED_REGEX;
         }
     }
@@ -44,13 +46,24 @@ public class StringCalculator {
 
     private int calculateSum(String[] numberStrings) {
         int sum = 0;
+        StringBuilder errorBuilder = new StringBuilder();
         for (String str : numberStrings) {
-            sum = sum + convertStringToInt(str);
+            sum = sum + convertStringToInt(str, errorBuilder);
         }
+        throwIfErrorForNegativeNumbers(errorBuilder);
         return sum;
     }
 
-    private int convertStringToInt(String str) {
-        return Integer.parseInt(str);
+    private void throwIfErrorForNegativeNumbers(StringBuilder errorBuilder) {
+        if (errorBuilder.length() > 0)
+            throw new RuntimeException(NEGATIVE_NUMBERS_ARE_NOT_ALLOWED_MESSAGE + errorBuilder.toString());
+    }
+
+    private int convertStringToInt(String str, StringBuilder errorBuilder) {
+        int num = Integer.parseInt(str);
+        if (num < 0) {
+            errorBuilder.append(SPACE).append(num);
+        }
+        return num;
     }
 }

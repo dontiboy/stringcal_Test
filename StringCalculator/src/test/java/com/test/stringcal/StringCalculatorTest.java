@@ -2,7 +2,9 @@ package com.test.stringcal;
 
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -46,7 +48,30 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void testToSupportDifferentDelimiterString_3numbers() {
+    public void testToSupportDifferentDelimiterString_2numbers() {
+        assertEquals(3, stringCalculator.add("//;\n1;2"));
+    }
+
+    @Test
+    public void testToSupportDifferentDelimiterString() {
         assertEquals(3, stringCalculator.add("//@\n1@2"));
     }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void testHandleNegativeNumberToThrowException() {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Negative Numbers are not allowed : -2");
+        stringCalculator.add("//,\n-2");
+   }
+
+    @Test
+   public void testMultipleNegativeNumbersToThrowException() {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Negative Numbers are not allowed : -1 -2 -3");
+        stringCalculator.add("//,\n-1,-2,-3");
+    }
+
 }
