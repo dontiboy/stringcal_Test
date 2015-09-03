@@ -8,12 +8,14 @@ public class StringCalculator {
     public static final int REGEX_GROUP_NUMBER_STRING = 5;
     public static final int REGEX_NUMBER_OF_USER_DEFINED_SINGLE_CHARACTER_DELIMITERS = 2;
     public static final String PREDEFINED_REGEX = ",|\n";
-    //public static final String _USER_DEFINED_REGEX_PATTERN = "^//(.)\n(.*)";
     public static final String _USER_DEFINED_REGEX_PATTERN = "^//((.)|(\\[(.*)\\]))\n(.*)";
     public static final String NEGATIVE_NUMBERS_ARE_NOT_ALLOWED_MESSAGE = "Negative Numbers are not allowed :";
     public static final String SPACE = " ";
     public static final int THOUSAND_NUMBER = 1000;
-    public static final int REGEXP_GROUP_NUMBER_OF_USER_DEFINED_MULTIPLE_CHARACTER_DELIMITER = 4;
+    public static final String REGEX_OR_CONDITION = "|";
+    public static final String REGEX_ALL_USER_DEFINIED_DELIMITERS_PATTERN = "\\[(.*?)\\]";
+    public static final int REGEX_GROUP_NUMBER_OF_ALL_USER_DEFINED_DELIMITERS = 1;
+    public static final int REGEX_GROUP_NUMBER_OF_ONE_USER_DEFINED_DELIMITER = 1;
 
     public int add(String str) {
 
@@ -48,7 +50,22 @@ public class StringCalculator {
     }
 
     private String getUserDefinedMultipleDelimiters(Matcher matcher) {
-        return Pattern.quote(matcher.group(REGEXP_GROUP_NUMBER_OF_USER_DEFINED_MULTIPLE_CHARACTER_DELIMITER));
+        String delimiters = matcher.group(REGEX_GROUP_NUMBER_OF_ALL_USER_DEFINED_DELIMITERS);
+        Matcher delimiterMatcher= Pattern.compile(REGEX_ALL_USER_DEFINIED_DELIMITERS_PATTERN).matcher(delimiters);
+        StringBuilder allDemilitersBuilder= new StringBuilder();
+        while(delimiterMatcher.find()){
+            addOneUserDefinedDelimitersToAllDelimiters(allDemilitersBuilder, delimiterMatcher.group(REGEX_GROUP_NUMBER_OF_ONE_USER_DEFINED_DELIMITER));
+        }
+        return allDemilitersBuilder.toString();
+
+    }
+
+    private void addOneUserDefinedDelimitersToAllDelimiters(StringBuilder allDemilitersBuilder, String delimiter) {
+        if(allDemilitersBuilder.length() == 0 ){
+            allDemilitersBuilder.append(Pattern.quote(delimiter));
+        }else{
+            allDemilitersBuilder.append(REGEX_OR_CONDITION +Pattern.quote(delimiter));
+        }
     }
 
     private String getUserDefinedSingleCharacterDelimiter(Matcher matcher) {

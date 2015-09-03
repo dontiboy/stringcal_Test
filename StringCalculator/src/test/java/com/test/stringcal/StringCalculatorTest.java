@@ -49,11 +49,13 @@ public class StringCalculatorTest {
 
     @Test
     public void testToSupportDifferentDelimiterString_2numbers() {
+
         assertEquals(3, stringCalculator.add("//;\n1;2"));
     }
 
     @Test
     public void testToSupportDifferentDelimiterString() {
+
         assertEquals(3, stringCalculator.add("//@\n1@2"));
     }
 
@@ -85,5 +87,10 @@ public class StringCalculatorTest {
         assertEquals(6, stringCalculator.add("//[***]\n1***2***3"));
     }
 
+    @Test
+    public void testMultipleDelimitersShouldBeHandled() {
+
+        assertEquals(6, stringCalculator.add("//[*][%]\n1*2%3"));
+   }
 
 }
